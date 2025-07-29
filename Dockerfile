@@ -1,6 +1,7 @@
 FROM openjdk:11-slim
 WORKDIR /app
 COPY target/h2_example-0.0.1-SNAPSHOT.jar h2_example-0.0.1-SNAPSHOT.jar
+echo "jar copied"
 EXPOSE 8080
 echo "Starting Application"
 echo "port expose completed"
