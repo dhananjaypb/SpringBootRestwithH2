@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class StudentController {
@@ -23,7 +26,11 @@ public class StudentController {
 
     @GetMapping("/student")
     public List<Student> getStudent(){
-     return studentService.getStudent();
+        try {
+            return studentService.getStudent();
+        } catch (Exception exception){
+            return Arrays.asList(new Student(1, "Test_User", 100));
+        }
     }
 
     @PostMapping("/addStudent")
@@ -31,5 +38,13 @@ public class StudentController {
         if(studentService.addStudent(student)!=null){
             return true;}
         return false;
+    }
+
+    @PostMapping("/addDummyStudent")
+    public List<Student> addDummyStudent(@RequestBody Student student){
+        if(Objects.nonNull(student)){
+            return Arrays.asList(new Student(student.getStdId(), student.getStdName(), student.getStdAge()));
+        }
+        return Collections.emptyList();
     }
 }
